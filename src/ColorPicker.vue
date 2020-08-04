@@ -27,6 +27,7 @@
             }"
             v-on="mouseScroll ? { wheel: onScroll } : null"
             ref="rotator"
+            @mouseup="mouseUpClose ? hidePalette : null"
         >
             <div class="rcp__knob" :class="isKnobIn ? 'in' : 'out'" @transitionend="hidePalette"></div>
         </div>
@@ -106,6 +107,9 @@ export default {
         ariaLabelColorWell: {
             default: 'color well',
         },
+        mouseUpClose: {
+            default: false,
+        }
     },
     data() {
         return {
@@ -206,6 +210,7 @@ export default {
                 this.isRippling = true;
             } else {
                 this.isPaletteIn = true;
+                this.$emit('palette-open');
             }
         },
         togglePicker() {
@@ -224,6 +229,7 @@ export default {
         hidePalette() {
             if (!this.isKnobIn) {
                 this.isPaletteIn = false;
+                this.$emit('palette-close');
             }
         },
     },
